@@ -1,46 +1,72 @@
-// components/GameList.js
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const GameList = () => {
   const [games, setGames] = useState([]);
 
+  // Fetch dữ liệu game từ backend
   useEffect(() => {
-    fetch('http://localhost:3000/games')  // Đảm bảo URL API chính xác
+    fetch('http://localhost:3000/games')  // URL backend
       .then(response => response.json())
       .then(data => setGames(data))
       .catch(error => console.error('Error fetching games:', error));
   }, []);
 
+  // Hàm xử lý xóa game
+  const handleDelete = (gameId) => {
+    fetch(`http://localhost:3000/games/${gameId}`, {
+      method: 'DELETE',
+    })
+      .then(response => {
+        if (response.ok) {
+          // Cập nhật lại danh sách game sau khi xóa
+          setGames(games.filter(game => game.id !== gameId));
+        }
+      })
+      .catch(error => console.error('Error deleting game:', error));
+  };
+
+  // Hàm xử lý chỉnh sửa game
+  const handleEdit = (gameId) => {
+    // Điều hướng đến trang sửa game, ví dụ sử dụng React Router
+    window.location.href = `/games/edit/${gameId}`;
+  };
+
   return (
     <div>
-      <h1>Games List</h1>
-      {games.length === 0 ? (
-        <p>No games available</p>
-      ) : (
-        <ul>
+      <h1>Game List</h1>
+      {/* Nút thêm game */}
+      <button onClick={() => window.location.href = '/games/new'}>Add New Game</button>
+
+      {/* Hiển thị danh sách game trong bảng */}
+      <table border="1" cellPadding="10" style={{ width: '100%', marginTop: '20px' }}>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Thumbnail</th>
+            <th>Category</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
           {games.map(game => (
-            <li key={game.id}>
-              <h2>{game.name}</h2>
-              <p>{game.description}</p>
-              {game.thumbnail ? (
-                <img src={game.thumbnail} alt={game.name} style={{ width: '200px', height: 'auto' }} />
-              ) : (
-                <p>No thumbnail available</p>
-              )}
-              {game.flashFile ? (
-                <p><a href={game.flashFile} target="_blank" rel="noopener noreferrer">Play Flash File</a></p>
-              ) : (
-                <p>No flash file available</p>
-              )}
-              {game.category ? (
-                <p>Category: {game.category.name}</p>
-              ) : (
-                <p>No category assigned</p>
-              )}
-            </li>
+            <tr key={game.id}>
+              <td>{game.id}</td>
+              <td>{game.name}</td>
+              <td>{game.description}</td>
+              <td>{game.thumbnail ? <img src={game.thumbnail} alt="Thumbnail" width="50" /> : 'No Image'}</td>
+              <td>{game.category ? game.category.name : 'No Category'}</td>
+              <td>
+                {/* Nút sửa */}
+                <button onClick={() => handleEdit(game.id)}>Edit</button>
+                {/* Nút xóa */}
+                <button onClick={() => handleDelete(game.id)}>Delete</button>
+              </td>
+            </tr>
           ))}
-        </ul>
-      )}
+        </tbody>
+      </table>
     </div>
   );
 };
