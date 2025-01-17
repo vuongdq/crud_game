@@ -1,9 +1,9 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Put, Delete } from '@nestjs/common';
 import { GameService } from './game.service';
 import { CreateGameDto } from './dto/create-game.dto';
 import { UpdateGameDto } from './dto/update-game.dto';
 
-@Controller('games')  // Đảm bảo đường dẫn được định nghĩa là 'games'
+@Controller('games')
 export class GameController {
   constructor(private readonly gameService: GameService) {}
 
@@ -22,7 +22,7 @@ export class GameController {
     return this.gameService.findOne(+id);
   }
 
-  @Patch(':id')
+  @Put(':id')
   update(@Param('id') id: string, @Body() updateGameDto: UpdateGameDto) {
     return this.gameService.update(+id, updateGameDto);
   }

@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Game } from './game.entity';
@@ -21,15 +21,11 @@ export class GameService {
     return this.gameRepository.find({ relations: ['category'] });
   }
 
-  async findOne(id: number) {
-    const game = await this.gameRepository.findOne({
+  findOne(id: number) {
+    return this.gameRepository.findOne({
       where: { id },
       relations: ['category'],
     });
-    if (!game) {
-      throw new NotFoundException(`Game with ID ${id} not found`);
-    }
-    return game;
   }
 
   update(id: number, updateGameDto: UpdateGameDto) {

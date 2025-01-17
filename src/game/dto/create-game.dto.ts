@@ -1,7 +1,20 @@
 // src/game/dto/create-game.dto.ts
+import { IsString, IsNotEmpty } from 'class-validator';
+
 export class CreateGameDto {
-    name: string;
-    description: string;
-    categoryId: number;  // This should be the ID of the related Category
-  }
-  
+  @IsString()
+  @IsNotEmpty()
+  name: string;
+
+  @IsString()
+  @IsNotEmpty()
+  description: string;
+
+  @IsString()
+  @IsNotEmpty()
+  thumbnail: string; // Thêm trường này
+
+  @IsString()
+  @IsNotEmpty()
+  flashFile: string; // Thêm trường này
+}

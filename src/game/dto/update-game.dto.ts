@@ -1,7 +1,5 @@
 // src/game/dto/update-game.dto.ts
-export class UpdateGameDto {
-    name?: string;
-    description?: string;
-    categoryId?: number;  // Optional for partial updates
-  }
-  
+import { PartialType } from '@nestjs/mapped-types';
+import { CreateGameDto } from './create-game.dto';
+
+export class UpdateGameDto extends PartialType(CreateGameDto) {}
