@@ -1,0 +1,17 @@
+/* Sidebar.css */
+.sidebar {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .sidebar a {
+    color: white;
+    text-decoration: none;
+    padding: 10px 0;
+    transition: background-color 0.3s ease;
+  }
+  
+  .sidebar a:hover {
+    background-color: #495057;
+  }
+  

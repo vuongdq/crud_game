@@ -9,7 +9,7 @@ export class Category {
   @Column()
   name: string;
 
-  @Column()
+  @Column({ default: true })
   isActive: boolean;
 
   @OneToMany(() => Game, (game) => game.category)

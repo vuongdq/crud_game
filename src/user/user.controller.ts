@@ -1,9 +1,9 @@
-import { Controller, Get, Post, Body, Param, Patch, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Patch, Delete, Put } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 
-@Controller('users')  // Đảm bảo đường dẫn được định nghĩa là 'users'
+@Controller('users')  // Ensure the route is set correctly
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
@@ -19,16 +19,17 @@ export class UserController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.userService.findOne(+id);
+    return this.userService.findOne(+id);  // Ensure ID is converted to a number
   }
 
-  @Patch(':id')
+  @Put(':id')
   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    return this.userService.update(+id, updateUserDto);
+    return this.userService.update(+id, updateUserDto);  // Ensure that the +id converts to a number
   }
+  
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.userService.remove(+id);
+    return this.userService.remove(+id);  // Ensure ID is converted to a number
   }
 }

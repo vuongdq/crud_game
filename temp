@@ -1,0 +1,22 @@
+// src/game/dto/create-category.dto.ts
+import { IsString, IsNotEmpty, IsBoolean } from 'class-validator';
+
+export class CreateCategoryDto {
+  @IsString()
+  @IsNotEmpty()
+  name: string;
+
+  @IsBoolean()
+  isActive: boolean;
+}
+
+// src/game/dto/update-category.dto.ts
+
+
+import { PartialType } from '@nestjs/mapped-types';
+import { CreateCategoryDto } from './create-category.dto';
+
+export class UpdateCategoryDto extends PartialType(CreateCategoryDto) {}
+
+
+

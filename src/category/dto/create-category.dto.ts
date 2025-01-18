@@ -1,6 +1,10 @@
-// src/category/dto/create-category.dto.ts
+import { IsString, IsNotEmpty, IsBoolean } from 'class-validator';
+
 export class CreateCategoryDto {
-    name: string;
-    isActive: boolean;
-  }
-  
+  @IsString()
+  @IsNotEmpty()
+  name: string;
+
+  @IsBoolean()
+  isActive: boolean;
+}
